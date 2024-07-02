@@ -6,17 +6,7 @@ import { ICarRepository } from '@modules/cars/domain/repositories/ICarRepository
 import { ICar } from '@modules/cars/domain/models/ICar';
 import { ICreateCar } from '@modules/cars/domain/models/ICreateCar';
 import { IPaginateCar } from '@modules/cars/domain/models/IPaginateCar';
-
-interface SearchParams {
-  limit: number;
-  offset: number;
-  model?: string;
-  color?: string;
-  year?: string;
-  value_per_day?: number;
-  number_of_passengers?: number;
-  accessories?: Array<{ description: string }>;
-}
+import { ISearchParamsList } from '@modules/cars/domain/models/ISearchParamsList';
 
 class CarRepository implements ICarRepository {
   private ormRepository: Repository<Car>;
@@ -76,7 +66,7 @@ class CarRepository implements ICarRepository {
     value_per_day,
     number_of_passengers,
     accessories,
-  }: SearchParams): Promise<IPaginateCar> {
+  }: ISearchParamsList): Promise<IPaginateCar> {
     const skip = (Number(offset) - 1) * limit;
 
     const where: any = {};
