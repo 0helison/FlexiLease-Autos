@@ -1,5 +1,4 @@
 import { ObjectId } from 'mongodb';
-import { IAccessory } from './ICar';
 
 export interface IUpdateCar {
   _id: ObjectId;

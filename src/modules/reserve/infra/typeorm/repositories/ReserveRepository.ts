@@ -15,20 +15,8 @@ class ReserveRepository implements IReserveRepository {
     this.ormRepository = dataSource.getMongoRepository(Reserve);
   }
 
-  public async create({
-    _id_user,
-    _id_car,
-    start_date,
-    end_date,
-    final_value,
-  }: ICreateReserve): Promise<IReserve> {
-    const reserve = this.ormRepository.create({
-      _id_user,
-      _id_car,
-      start_date,
-      end_date,
-      final_value,
-    });
+  public async create(filds: ICreateReserve): Promise<IReserve> {
+    const reserve = this.ormRepository.create(filds);
 
     await this.ormRepository.save(reserve);
 
@@ -78,16 +66,14 @@ class ReserveRepository implements IReserveRepository {
   }
 
   public async findAll({
-    offset = 0,
-    limit = 10,
+    offset,
+    limit,
     _id_user,
     _id_car,
     start_date,
     end_date,
     final_value,
   }: ISearchParamsList): Promise<IPaginateReserve> {
-    const skip = (Number(offset) - 1) * limit;
-
     const where: any = {};
 
     if (_id_user) {

@@ -10,30 +10,8 @@ class ListUserService {
     private usersRepository: IUsersRepository,
   ) {}
 
-  public async execute({
-    offset,
-    limit,
-    name,
-    birthday,
-    qualified,
-    cep,
-    complement,
-    neighborhood,
-    locality,
-    uf,
-  }: ISearchParamsList): Promise<IPaginateUser> {
-    const result = await this.usersRepository.findAll({
-      offset,
-      limit,
-      name,
-      birthday,
-      qualified,
-      cep,
-      complement,
-      neighborhood,
-      locality,
-      uf,
-    });
+  public async execute(params: ISearchParamsList): Promise<IPaginateUser> {
+    const result = await this.usersRepository.findAll(params);
 
     return result;
   }

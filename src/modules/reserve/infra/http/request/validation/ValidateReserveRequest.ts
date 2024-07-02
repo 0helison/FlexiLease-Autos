@@ -1,12 +1,6 @@
-import { isValid, parse } from 'date-fns';
+import { customDateValidation } from '@shared/format/FormatDate';
+import { minLength } from '@shared/format/Minimum';
 import { z } from 'zod';
-
-const customDateValidation = (date: string): boolean => {
-  const parsedDate = parse(date, 'dd/MM/yyyy', new Date());
-  return isValid(parsedDate);
-};
-
-const minLength = (min: number) => (value: string) => value.length >= min;
 
 export const ZodReserveSchema = z.object({
   _id_user: z

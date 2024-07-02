@@ -27,8 +27,6 @@ class UsersRepository implements IUsersRepository {
     locality,
     uf,
   }: ISearchParamsList): Promise<IPaginateUser> {
-    const skip = (Number(offset) - 1) * limit;
-
     const where: any = {};
 
     if (name) {
@@ -110,32 +108,8 @@ class UsersRepository implements IUsersRepository {
     return user;
   }
 
-  public async create({
-    name,
-    cpf,
-    birthday,
-    email,
-    password,
-    qualified,
-    cep,
-    complement,
-    neighborhood,
-    locality,
-    uf,
-  }: ICreateUser): Promise<IUser> {
-    const user = this.ormRepository.create({
-      name,
-      cpf,
-      birthday,
-      email,
-      password,
-      qualified,
-      cep,
-      complement,
-      neighborhood,
-      locality,
-      uf,
-    });
+  public async create(fields: ICreateUser): Promise<IUser> {
+    const user = this.ormRepository.create(fields);
 
     await this.ormRepository.save(user);
 

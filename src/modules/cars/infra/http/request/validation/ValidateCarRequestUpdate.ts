@@ -1,6 +1,5 @@
+import { minLength } from '@shared/format/Minimum';
 import { z } from 'zod';
-
-const minLength = (min: number) => (value: string) => value.length >= min;
 
 export const ZodCarUpdateSchema = z.object({
   model: z

@@ -10,26 +10,8 @@ class ListCarService {
     private carRepository: ICarRepository,
   ) {}
 
-  public async execute({
-    limit,
-    offset,
-    model,
-    color,
-    year,
-    value_per_day,
-    number_of_passengers,
-    accessories,
-  }: ISearchParamsList): Promise<IPaginateCar> {
-    const result = await this.carRepository.findAll({
-      limit,
-      offset,
-      model,
-      color,
-      year,
-      value_per_day,
-      number_of_passengers,
-      accessories,
-    });
+  public async execute(params: ISearchParamsList): Promise<IPaginateCar> {
+    const result = await this.carRepository.findAll(params);
 
     return result;
   }

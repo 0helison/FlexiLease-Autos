@@ -25,22 +25,8 @@ class CarRepository implements ICarRepository {
     return car || null;
   }
 
-  public async create({
-    model,
-    color,
-    year,
-    value_per_day,
-    number_of_passengers,
-    accessories,
-  }: ICreateCar): Promise<ICar> {
-    const car = this.ormRepository.create({
-      model,
-      color,
-      year,
-      value_per_day,
-      number_of_passengers,
-      accessories,
-    });
+  public async create(fields: ICreateCar): Promise<ICar> {
+    const car = this.ormRepository.create(fields);
 
     await this.ormRepository.save(car);
 

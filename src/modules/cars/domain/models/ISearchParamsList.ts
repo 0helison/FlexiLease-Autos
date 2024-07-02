@@ -1,5 +1,3 @@
-import { IAccessory } from './ICar';
-
 export interface ISearchParamsList {
   limit: number;
   offset: number;
