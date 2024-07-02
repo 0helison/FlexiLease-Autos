@@ -3,11 +3,8 @@ import { container } from 'tsyringe';
 import { HttpStatusCode } from '@shared/enums/HttpStatusCode';
 import ListReserveService from '@modules/reserve/services/ListReserveService';
 import { ObjectId } from 'mongodb';
-import {
-  formatReserves,
-  parseDateParams,
-} from '@modules/reserve/utils/dateUtils';
-import { ISearchParamsList } from '@modules/reserve/domain/models/ISearchParamsList';
+import { formatReserves } from '@modules/reserve/utils/dateUtils';
+import { parseDateParams } from '@shared/format/FormatDate';
 
 class ListReserveController {
   public async index(request: Request, response: Response): Promise<Response> {
@@ -35,7 +32,7 @@ class ListReserveController {
 
     const listReserve = container.resolve(ListReserveService);
 
-    const searchParams: ISearchParamsList = {
+    const reservesData = await listReserve.execute({
       limit,
       offset,
       _id_user,
@@ -43,9 +40,7 @@ class ListReserveController {
       start_date,
       end_date,
       final_value,
-    };
-
-    const reservesData = await listReserve.execute(searchParams);
+    });
 
     const formattedReserve = formatReserves(reservesData.reserves);
 

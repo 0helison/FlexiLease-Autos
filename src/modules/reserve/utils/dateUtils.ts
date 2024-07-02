@@ -14,14 +14,6 @@ export function generateDateRange(start: Date, end: Date): Date[] {
   return dateArray;
 }
 
-export function parseDateParams(
-  dateString: string,
-  formatString: string = 'dd/MM/yyyy',
-): Date | undefined {
-  const date = parse(dateString, formatString, new Date());
-  return isNaN(date.getTime()) ? undefined : date;
-}
-
 export function formatReserve(reserve: IReserve) {
   return {
     ...reserve,

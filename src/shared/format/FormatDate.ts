@@ -13,3 +13,11 @@ export function formatDate(
 ): string {
   return format(date, formatString);
 }
+
+export function parseDateParams(
+  dateString: string,
+  formatString: string = 'dd/MM/yyyy',
+): Date | undefined {
+  const date = parse(dateString, formatString, new Date());
+  return isNaN(date.getTime()) ? undefined : date;
+}
