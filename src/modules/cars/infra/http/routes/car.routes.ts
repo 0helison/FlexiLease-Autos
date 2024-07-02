@@ -9,7 +9,8 @@ import ShowCarController from '../controllers/ShowCarController';
 import UpdateCarController from '../controllers/UpdateCarController';
 import ListCarController from '../controllers/ListCarController';
 import UpdateAccessoriesController from '../controllers/UpdateAccessoriesController';
-import { ZodCarUpdateRequestSchema } from '../request/validation/ValidateCarUpdateRequest';
+import { ZodCarUpdateAccessorySchema } from '../request/validation/ValidateCarUpdateAcessory';
+import { ZodCarUpdateSchema } from '../request/validation/ValidateCarRequestUpdate';
 
 const carsRouter = Router();
 
@@ -33,14 +34,14 @@ carsRouter.get('/:id', isAuthenticated, showCarsController.show);
 carsRouter.put(
   '/:id',
   isAuthenticated,
-  validate(ZodCarSchema),
+  validate(ZodCarUpdateSchema),
   updateCarsController.update,
 );
 carsRouter.get('/', isAuthenticated, listCarsController.index);
 carsRouter.patch(
   '/:id/accessories/:accessoryId',
   isAuthenticated,
-  validate(ZodCarUpdateRequestSchema),
+  validate(ZodCarUpdateAccessorySchema),
   updateAccessoriesController.patch,
 );
 
