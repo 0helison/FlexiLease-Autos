@@ -1,11 +1,7 @@
 import { inject, injectable } from 'tsyringe';
 import { IPaginateUser } from '../domain/models/IPaginateUser';
 import { IUsersRepository } from '../domain/repositories/IUserRepository';
-
-interface SearchParams {
-  limit: number;
-  offset: number;
-}
+import { ISearchParamsList } from '../domain/models/ISearchParamsList';
 
 @injectable()
 class ListUserService {
@@ -15,26 +11,31 @@ class ListUserService {
   ) {}
 
   public async execute({
-    limit,
     offset,
-  }: SearchParams): Promise<IPaginateUser> {
-    const {
-      users,
-      total,
-      offset: actualOffset,
-      offsets: totalOffsets,
-    } = await this.usersRepository.findAll({
-      limit,
+    limit,
+    name,
+    birthday,
+    qualified,
+    cep,
+    complement,
+    neighborhood,
+    locality,
+    uf,
+  }: ISearchParamsList): Promise<IPaginateUser> {
+    const result = await this.usersRepository.findAll({
       offset,
+      limit,
+      name,
+      birthday,
+      qualified,
+      cep,
+      complement,
+      neighborhood,
+      locality,
+      uf,
     });
 
-    return {
-      users,
-      limit,
-      total,
-      offset: actualOffset,
-      offsets: totalOffsets,
-    };
+    return result;
   }
 }
 

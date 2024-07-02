@@ -2,14 +2,10 @@ import { ObjectId } from 'mongodb';
 import { ICreateUser } from '../models/ICreateUser';
 import { IUser } from '../models/IUser';
 import { IPaginateUser } from '../models/IPaginateUser';
-
-interface SearchParams {
-  limit: number;
-  offset: number;
-}
+import { ISearchParamsList } from '../models/ISearchParamsList';
 
 export interface IUsersRepository {
-  findAll(params: SearchParams): Promise<IPaginateUser>;
+  findAll(params: ISearchParamsList): Promise<IPaginateUser>;
   findById(_id: ObjectId): Promise<IUser | null>;
   findByCpf(cpf: string): Promise<IUser | null>;
   findByEmail(email: string): Promise<IUser | null>;

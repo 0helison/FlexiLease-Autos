@@ -67,8 +67,6 @@ class CarRepository implements ICarRepository {
     number_of_passengers,
     accessories,
   }: ISearchParamsList): Promise<IPaginateCar> {
-    const skip = (Number(offset) - 1) * limit;
-
     const where: any = {};
 
     if (model) {
