@@ -39,7 +39,7 @@ class ListUsersController {
     const formattedUser = formatUsers(usersData.users);
 
     const listUsers = {
-      reserves: formattedUser,
+      users: formattedUser,
       limit: usersData.limit,
       offset: usersData.offset,
       total: usersData.total,

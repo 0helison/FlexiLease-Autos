@@ -11,6 +11,7 @@ import { IHashProvider } from '../providers/models/IHashedProvider';
 import { differenceInYears } from 'date-fns';
 import { ICreateUser } from '@modules/users/domain/models/ICreateUser';
 import { IUser } from '@modules/users/domain/models/IUser';
+import { isAtLeast18YearsOld } from '../utils/formatUtils';
 
 @injectable()
 class CreateUserService {
@@ -34,10 +35,6 @@ class CreateUserService {
     locality,
     uf,
   }: ICreateUser): Promise<IUser> {
-    function isAtLeast18YearsOld(date: Date): boolean {
-      return differenceInYears(Date.now(), date) >= 18;
-    }
-
     if (!isAtLeast18YearsOld(birthday)) {
       throw new BusinessError(UNDERAGE_USER);
     }

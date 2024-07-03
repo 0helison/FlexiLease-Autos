@@ -6,9 +6,9 @@ import { Router } from 'express';
 
 const routes = Router();
 
-routes.use('/api/v1/users', usersRouter);
+routes.use('/api/v1/user', usersRouter);
 routes.use('/api/v1/auth', authRouter);
-routes.use('/api/v1/cars', carsRouter);
+routes.use('/api/v1/car', carsRouter);
 routes.use('/api/v1/reserve', reserveRouter);
 
 export default routes;

@@ -6,7 +6,7 @@ import { NotFoundError } from '@shared/errors/NotFoundError';
 import { USER_NOT_FOUND } from '@shared/consts/ErrorMessagesConsts';
 
 @injectable()
-class ShowUsersService {
+class ShowUserService {
   constructor(
     @inject('UsersRepository')
     private usersRepository: IUsersRepository,
@@ -23,4 +23,4 @@ class ShowUsersService {
   }
 }
 
-export default ShowUsersService;
+export default ShowUserService;

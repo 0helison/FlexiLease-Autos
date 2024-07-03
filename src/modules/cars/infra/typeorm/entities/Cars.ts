@@ -22,6 +22,6 @@ export class Car implements ICar {
   @Column({ nullable: false })
   number_of_passengers: number;
 
-  @Column('json', { nullable: false })
+  @Column('simple-array')
   accessories: IAccessory[];
 }

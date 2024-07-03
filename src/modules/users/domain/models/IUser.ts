@@ -1,4 +1,5 @@
 import { ObjectId } from 'mongodb';
+import { Qualified } from '../enums/Qualified';
 
 export interface IUser {
   _id: ObjectId;
@@ -7,7 +8,7 @@ export interface IUser {
   birthday: Date;
   email: string;
   password: string;
-  qualified: 'yes' | 'no';
+  qualified: Qualified;
   cep: string;
   complement: string;
   neighborhood: string;

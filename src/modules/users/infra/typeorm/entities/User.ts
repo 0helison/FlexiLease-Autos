@@ -1,3 +1,4 @@
+import { Qualified } from '@modules/users/domain/enums/Qualified';
 import { IUser } from '@modules/users/domain/models/IUser';
 import { Exclude } from 'class-transformer';
 import { ObjectId } from 'mongodb';
@@ -24,8 +25,8 @@ export class User implements IUser {
   @Column({ nullable: false })
   password: string;
 
-  @Column({ type: 'enum', enum: ['yes', 'no'], nullable: false })
-  qualified: 'yes' | 'no';
+  @Column({ type: 'enum', enum: Qualified, nullable: false })
+  qualified: Qualified;
 
   @Column({ nullable: false })
   cep: string;
