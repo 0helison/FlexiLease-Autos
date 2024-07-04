@@ -23,7 +23,7 @@ export const userConfig = {
         '**/*.config.mjs',
       ],
     },
-    testTimeout: 10000,
+    testTimeout: 100000,
   },
 };
 

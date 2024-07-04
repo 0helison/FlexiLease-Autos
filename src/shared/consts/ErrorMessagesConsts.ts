@@ -17,3 +17,4 @@ export const CAR_ALREADY_RESERVED_SAME_DAY =
   'More than one reservation for the same car is not permitted on the same day.';
 export const USER_ALREADY_HAS_RESERVATION_IN_DATE =
   'The user already has a reservation on that date.';
+export const NON_REPEAT_ACCESSORIES = 'Repeating accessories is not permitted.';

@@ -16,9 +16,10 @@ export default class UpdateUserController {
 
     const parsedDate = parseDate(birthday);
 
-    const addressData = await CepService(cep);
-
+    const cepService = container.resolve(CepService);
     const createUser = container.resolve(UpdateUserService);
+
+    const addressData = await cepService.getAddressData(cep);
 
     const userData = await createUser.execute({
       _id,

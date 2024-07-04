@@ -44,8 +44,8 @@ export const ZodCarSchema = z.object({
     .min(1, { message: 'At least one accessory is required.' })
     .refine(
       accessories => {
-        const descriptions = accessories.map(
-          accessory => accessory.description,
+        const descriptions = accessories.map(accessory =>
+          accessory.description.toLowerCase(),
         );
         return new Set(descriptions).size === descriptions.length;
       },

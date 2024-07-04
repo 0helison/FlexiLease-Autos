@@ -3,8 +3,12 @@ import { ObjectId } from 'mongodb';
 import { ICarRepository } from '../domain/repositories/ICarRepository';
 import { IAccessory, ICar } from '../domain/models/ICar';
 import { NotFoundError } from '@shared/errors/NotFoundError';
-import { CAR_NOT_FOUND } from '@shared/consts/ErrorMessagesConsts';
+import {
+  CAR_NOT_FOUND,
+  NON_REPEAT_ACCESSORIES,
+} from '@shared/consts/ErrorMessagesConsts';
 import { IUpdateAccessory } from '../domain/models/IUpdateAccessory';
+import { BusinessError } from '@shared/errors/BusinessError';
 
 @injectable()
 class UpdateAccessoryService {
@@ -22,6 +26,14 @@ class UpdateAccessoryService {
 
     if (!car) {
       throw new NotFoundError(CAR_NOT_FOUND);
+    }
+
+    const descriptions = car.accessories
+      .filter(acc => !acc._id.equals(_id_accessory))
+      .map(acc => acc.description.toLowerCase());
+
+    if (descriptions.includes(description.toLowerCase())) {
+      throw new BusinessError(NON_REPEAT_ACCESSORIES);
     }
 
     const existingAccessory = car.accessories.find(acc =>
