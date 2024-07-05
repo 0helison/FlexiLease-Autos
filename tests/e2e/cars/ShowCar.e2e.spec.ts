@@ -77,6 +77,18 @@ describe('ShowCar', () => {
       .set('Authorization', `Bearer ${token}`);
 
     expect(response.status).toBe(HttpStatusCode.OK);
+    expect(response.body).toHaveProperty('_id', car.body._id);
+    expect(response.body).toHaveProperty('model', carDelete.model);
+    expect(response.body).toHaveProperty('color', carDelete.color);
+    expect(response.body).toHaveProperty('year', carDelete.year);
+    expect(response.body).toHaveProperty(
+      'value_per_day',
+      carDelete.value_per_day,
+    );
+    expect(response.body).toHaveProperty(
+      'number_of_passengers',
+      carDelete.number_of_passengers,
+    );
 
     await supertest(app)
       .delete(`/api/v1/user/${user.body._id}`)

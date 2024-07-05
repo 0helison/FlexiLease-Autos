@@ -10,6 +10,10 @@
     "typeorm": "ts-node-dev -r tsconfig-paths/register ./node_modules/typeorm/cli.js",
     "swagger-autogen": "ts-node src/shared/infra/http/swagger.ts",
     "format": "prettier --write .",
+    "test:first": "vitest run --dir ./tests/e2e/users/",
+    "test:second": "vitest run --dir ./tests/e2e/reserves/",
+    "test:third": "vitest run --dir ./tests/e2e/cars/",
+    "test:all": "npm run test:first && npm run test:second && npm run test:third",
     "test:e2e": "vitest run --dir ./tests/e2e/",
     "test:cov": "vitest run --coverage"
   },

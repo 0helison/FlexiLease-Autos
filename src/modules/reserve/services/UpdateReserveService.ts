@@ -16,6 +16,7 @@ import { BusinessError } from '@shared/errors/BusinessError';
 import { IUsersRepository } from '@modules/users/domain/repositories/IUserRepository';
 import { ICarRepository } from '@modules/cars/domain/repositories/ICarRepository';
 import { dateOrderValidation, generateDateRange } from '../utils/dateUtils';
+import { differenceInDays } from 'date-fns';
 
 @injectable()
 class UpdateReserveService {
@@ -95,6 +96,14 @@ class UpdateReserveService {
       }
       reserveToUpdate.start_date = start_date;
       reserveToUpdate.end_date = end_date;
+    }
+
+    const finalValueUpdate = await this.carRepository.findById(_id_car);
+
+    if (finalValueUpdate) {
+      reserveToUpdate.final_value =
+        finalValueUpdate?.value_per_day *
+        (differenceInDays(end_date, start_date) + 1);
     }
 
     const updateReserve = await this.reserveRepository.save(reserveToUpdate);

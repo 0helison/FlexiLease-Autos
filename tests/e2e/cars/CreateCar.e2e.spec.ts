@@ -18,12 +18,14 @@ afterAll(async () => {
 describe('CreateCar', () => {
   let createCarService: CreateCarService;
 
+  let token: string;
+
   const userCarCreate = {
     name: 'User Car Create',
-    cpf: '555.010.444-11',
-    birthday: '17/08/2000',
-    email: 'user_car_create@mail.com',
-    password: '123456',
+    cpf: '655.333.444-55',
+    birthday: '17/08/2001',
+    email: 'user_car_create1@mail.com',
+    password: '1234567',
     qualified: 'yes',
     cep: '58340-000',
   };
@@ -31,7 +33,7 @@ describe('CreateCar', () => {
   const carCreate = {
     model: 'Gol G5',
     color: 'white',
-    year: '1950',
+    year: '1980',
     value_per_day: 100,
     number_of_passengers: 3,
     accessories: [
@@ -128,7 +130,7 @@ describe('CreateCar', () => {
       password: userCarCreate.password,
     });
 
-    const token = auth.body.token;
+    token = auth.body.token;
 
     const response = await supertest(app)
       .post('/api/v1/car')

@@ -23,8 +23,8 @@ afterAll(async () => {
 describe('UpdateAccessories', () => {
   let updateAccessoryService: UpdateAccessoryService;
   let token: string;
-  let carId;
-  let accessoryId;
+  let carId: string;
+  let accessoryId: string;
 
   const userAccessoryUpdate = {
     name: 'User Car Update Accessory',

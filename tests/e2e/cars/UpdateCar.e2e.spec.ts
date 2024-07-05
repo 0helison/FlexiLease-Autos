@@ -19,11 +19,11 @@ describe('UpdateCar', () => {
   let updateCarService: UpdateCarService;
 
   let token: string;
-  let carId;
+  let carId: string;
 
   const userCarUpdate = {
     name: 'User Car Update',
-    cpf: '666.010.444-11',
+    cpf: '666.333.444-77',
     birthday: '17/08/2000',
     email: 'user_car_update@mail.com',
     password: '123456',
@@ -131,7 +131,7 @@ describe('UpdateCar', () => {
       password: userCarUpdate.password,
     });
 
-    const token = auth.body.token;
+    token = auth.body.token;
 
     const car = await supertest(app)
       .post('/api/v1/car')
@@ -161,7 +161,7 @@ describe('UpdateCar', () => {
       password: userCarUpdate.password,
     });
 
-    const token = auth.body.token;
+    token = auth.body.token;
 
     const car = await supertest(app)
       .post('/api/v1/car')

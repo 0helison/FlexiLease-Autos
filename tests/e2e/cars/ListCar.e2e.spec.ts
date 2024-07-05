@@ -137,7 +137,7 @@ describe('ListCar', () => {
 
     expect(response.status).toBe(HttpStatusCode.OK);
     expect(response.body.cars).toBeInstanceOf(Array);
-    expect(response.body.cars.length).toBeGreaterThan(0);
+    expect(response.body.cars.length).toBeGreaterThan(1);
     expect(response.body).toHaveProperty('limit');
     expect(response.body).toHaveProperty('offset');
     expect(response.body).toHaveProperty('total');

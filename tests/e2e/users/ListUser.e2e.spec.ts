@@ -100,7 +100,7 @@ describe('ListUser', () => {
 
     expect(response.status).toBe(HttpStatusCode.OK);
     expect(response.body.users).toBeInstanceOf(Array);
-    expect(response.body.users.length).toBeGreaterThan(0);
+    expect(response.body.users.length).toBeGreaterThan(1);
     expect(response.body).toHaveProperty('limit');
     expect(response.body).toHaveProperty('offset');
     expect(response.body).toHaveProperty('total');
