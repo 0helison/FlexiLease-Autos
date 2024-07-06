@@ -8,6 +8,7 @@ import ShowReserveController from '../controllers/ShowReserveController';
 import ListReserveController from '../controllers/ListReserveController';
 import UpdateReserveController from '../controllers/UpdateReserveController';
 import isAuthenticated from '@shared/infra/http/middlewares/isAuthenticate';
+import validateObjectId from '@shared/infra/http/middlewares/isValidId';
 
 const reserveRouter = Router();
 
@@ -23,11 +24,22 @@ reserveRouter.post(
   isAuthenticated,
   createReserveController.create,
 );
-reserveRouter.delete('/:id', isAuthenticated, deleteReserveController.delete);
-reserveRouter.get('/:id', isAuthenticated, showReserveController.show);
+reserveRouter.delete(
+  '/:id',
+  isAuthenticated,
+  validateObjectId,
+  deleteReserveController.delete,
+);
+reserveRouter.get(
+  '/:id',
+  isAuthenticated,
+  validateObjectId,
+  showReserveController.show,
+);
 reserveRouter.get('/', isAuthenticated, listReserveController.index);
 reserveRouter.put(
   '/:id',
+  validateObjectId,
   validate(ZodReserveSchema),
   isAuthenticated,
   updateReserveController.update,

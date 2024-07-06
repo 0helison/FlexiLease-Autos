@@ -11,6 +11,7 @@ import ListCarController from '../controllers/ListCarController';
 import UpdateAccessoriesController from '../controllers/UpdateAccessoriesController';
 import { ZodCarUpdateAccessorySchema } from '../request/validation/ValidateCarUpdateAcessory';
 import { ZodCarUpdateSchema } from '../request/validation/ValidateCarRequestUpdate';
+import validateObjectId from '@shared/infra/http/middlewares/isValidId';
 
 const carsRouter = Router();
 
@@ -29,11 +30,22 @@ carsRouter.post(
   validate(ZodCarSchema),
   createCarsController.create,
 );
-carsRouter.delete('/:id', isAuthenticated, deleteCarsController.delete);
-carsRouter.get('/:id', isAuthenticated, showCarsController.show);
+carsRouter.delete(
+  '/:id',
+  isAuthenticated,
+  validateObjectId,
+  deleteCarsController.delete,
+);
+carsRouter.get(
+  '/:id',
+  isAuthenticated,
+  validateObjectId,
+  showCarsController.show,
+);
 carsRouter.put(
   '/:id',
   isAuthenticated,
+  validateObjectId,
   validate(ZodCarUpdateSchema),
   updateCarsController.update,
 );
@@ -41,6 +53,7 @@ carsRouter.get('/', isAuthenticated, listCarsController.index);
 carsRouter.patch(
   '/:id/accessories/:accessoryId',
   isAuthenticated,
+  validateObjectId,
   validate(ZodCarUpdateAccessorySchema),
   updateAccessoriesController.patch,
 );

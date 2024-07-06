@@ -8,6 +8,7 @@ import DeleteUserController from '../controllers/DeleteUserController';
 import ShowUserController from '../controllers/ShowUserController';
 import ListUsersController from '../controllers/ListUserController';
 import UpdateUserController from '../controllers/UpdateUserController';
+import validateObjectId from '@shared/infra/http/middlewares/isValidId';
 
 const usersRouter = Router();
 
@@ -18,11 +19,22 @@ const listUsersController = container.resolve(ListUsersController);
 const updateUsersController = container.resolve(UpdateUserController);
 
 usersRouter.post('/', validate(ZodUserSchema), createUsersController.create);
-usersRouter.delete('/:id', isAuthenticated, deleteUsersController.delete);
-usersRouter.get('/:id', isAuthenticated, showUsersController.show);
+usersRouter.delete(
+  '/:id',
+  isAuthenticated,
+  validateObjectId,
+  deleteUsersController.delete,
+);
+usersRouter.get(
+  '/:id',
+  isAuthenticated,
+  validateObjectId,
+  showUsersController.show,
+);
 usersRouter.get('/', isAuthenticated, listUsersController.index);
 usersRouter.put(
   '/:id',
+  validateObjectId,
   validate(ZodUserSchema),
   isAuthenticated,
   updateUsersController.update,

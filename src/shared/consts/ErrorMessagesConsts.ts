@@ -1,3 +1,5 @@
+export const INVALID_ID_FORMAT =
+  'Invalid ID format. ID must be a string of 12 bytes or a string of 24 hex characters.';
 export const EMAIL_ALREADY_USED = 'E-mail address already used.';
 export const USER_NOT_FOUND = 'User not found.';
 export const CAR_NOT_FOUND = 'Car not found.';

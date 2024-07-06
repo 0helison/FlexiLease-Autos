@@ -16,10 +16,10 @@ export default class UpdateUserController {
 
     const parsedDate = parseDate(birthday);
 
-    const cepService = container.resolve(CepService);
+    //const cepService = container.resolve(CepService);
     const createUser = container.resolve(UpdateUserService);
 
-    const addressData = await cepService.getAddressData(cep);
+    //const addressData = await cepService.getAddressData(cep);
 
     const userData = await createUser.execute({
       _id,
@@ -30,10 +30,10 @@ export default class UpdateUserController {
       password,
       qualified,
       cep,
-      complement: addressData.complement,
-      neighborhood: addressData.neighborhood,
-      locality: addressData.locality,
-      uf: addressData.uf,
+      complement: 'N/A', //addressData.complement,
+      neighborhood: 'N/A', //addressData.neighborhood,
+      locality: 'Sapé', //addressData.locality,
+      uf: 'PB', //addressData.uf,
     });
 
     const user = formatUser(userData);
