@@ -177,7 +177,7 @@ describe('CreateCar', () => {
       .set('Authorization', `Bearer ${token}`);
   });
 
-  it('Should not be possible to repeat accessoriesof car', async () => {
+  it('Should not be possible to create to repeat accessoriesof car', async () => {
     const user = await supertest(app).post('/api/v1/user').send(userCarCreate);
 
     const auth = await supertest(app).post('/api/v1/auth').send({

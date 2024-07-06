@@ -115,9 +115,7 @@ describe('ListCar', () => {
       .set('Authorization', `Bearer ${token}`);
   });
   it('Should be able to list cars', async () => {
-    const userResponse = await supertest(app)
-      .post('/api/v1/user')
-      .send(userCarList);
+    await supertest(app).post('/api/v1/user').send(userCarList);
 
     const authResponse = await supertest(app).post('/api/v1/auth').send({
       email: userCarList.email,

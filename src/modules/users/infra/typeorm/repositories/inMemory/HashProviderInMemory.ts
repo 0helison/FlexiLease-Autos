@@ -1,4 +1,4 @@
-import { IHashProvider } from '../models/IHashedProvider';
+import { IHashProvider } from '@modules/users/providers/models/IHashedProvider';
 
 class HashProviderInMemory implements IHashProvider {
   public async generateHash(payload: string): Promise<string> {

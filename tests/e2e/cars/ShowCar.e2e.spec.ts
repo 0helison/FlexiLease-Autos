@@ -21,7 +21,7 @@ describe('ShowCar', () => {
   let showCarService: ShowCarService;
 
   const userCarShow = {
-    name: 'User Car Delete',
+    name: 'User Car Show',
     cpf: '212.212.212-22',
     birthday: '12/05/2000',
     email: 'user_car_show@mail.com',
@@ -30,7 +30,7 @@ describe('ShowCar', () => {
     cep: '58340-000',
   };
 
-  const carDelete = {
+  const carShow = {
     model: 'Gol G5',
     color: 'white',
     year: '1950',
@@ -69,7 +69,7 @@ describe('ShowCar', () => {
 
     const car = await supertest(app)
       .post('/api/v1/car')
-      .send(carDelete)
+      .send(carShow)
       .set('Authorization', `Bearer ${token}`);
 
     const response = await supertest(app)
@@ -78,16 +78,16 @@ describe('ShowCar', () => {
 
     expect(response.status).toBe(HttpStatusCode.OK);
     expect(response.body).toHaveProperty('_id', car.body._id);
-    expect(response.body).toHaveProperty('model', carDelete.model);
-    expect(response.body).toHaveProperty('color', carDelete.color);
-    expect(response.body).toHaveProperty('year', carDelete.year);
+    expect(response.body).toHaveProperty('model', carShow.model);
+    expect(response.body).toHaveProperty('color', carShow.color);
+    expect(response.body).toHaveProperty('year', carShow.year);
     expect(response.body).toHaveProperty(
       'value_per_day',
-      carDelete.value_per_day,
+      carShow.value_per_day,
     );
     expect(response.body).toHaveProperty(
       'number_of_passengers',
-      carDelete.number_of_passengers,
+      carShow.number_of_passengers,
     );
 
     await supertest(app)

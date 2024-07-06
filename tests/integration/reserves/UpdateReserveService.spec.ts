@@ -14,7 +14,7 @@ import {
   USER_NOT_FOUND,
 } from '@shared/consts/ErrorMessagesConsts';
 
-describe('UpdateReserveService', () => {
+describe('UpdateReserve', () => {
   let reserveRepositoryInMemory: ReserveRepositoryInMemory;
   let carRepositoryInMemory: CarRepositoryInMemory;
   let userRepositoryInMemory: UserRepositoryInMemory;

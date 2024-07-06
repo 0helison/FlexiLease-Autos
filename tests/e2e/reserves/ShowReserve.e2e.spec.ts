@@ -6,7 +6,7 @@ import { container } from 'tsyringe';
 import { RESERVE_NOT_FOUND } from '@shared/consts/ErrorMessagesConsts';
 import { NOT_FOUND } from '@shared/consts/ErrorsConsts';
 import { HttpStatusCode } from '@shared/enums/HttpStatusCode';
-import DeleteReserveService from '@modules/reserve/services/DeleteReserveService';
+import ShowReserveService from '@modules/reserve/services/ShowReserveService';
 
 beforeAll(async () => {
   await dataSource.initialize();
@@ -18,24 +18,24 @@ afterAll(async () => {
 });
 
 describe('ShowReserve', () => {
-  let deleteReserveService: DeleteReserveService;
+  let showReserveService: ShowReserveService;
 
   let token: string;
   let userId: string;
   let carId: string;
   let reserveId: string;
 
-  const userReserveDelete = {
+  const userReserveShow = {
     name: 'User Reserve Show',
     cpf: '214.214.444-22',
     birthday: '12/05/2000',
-    email: 'user_reserve_delete@mail.com',
+    email: 'user_reserve_show@mail.com',
     password: '123456',
     qualified: 'yes',
     cep: '58340-000',
   };
 
-  const carReserveDelete = {
+  const carReserveShow = {
     model: 'Gol G5',
     color: 'white',
     year: '2020',
@@ -59,26 +59,26 @@ describe('ShowReserve', () => {
   };
 
   beforeEach(() => {
-    deleteReserveService = container.resolve(DeleteReserveService);
+    showReserveService = container.resolve(ShowReserveService);
   });
 
   it('Should be able to show a reserve by ID', async () => {
     const user = await supertest(app)
       .post('/api/v1/user')
-      .send(userReserveDelete);
+      .send(userReserveShow);
 
     userId = user.body._id;
 
     const auth = await supertest(app).post('/api/v1/auth').send({
-      email: userReserveDelete.email,
-      password: userReserveDelete.password,
+      email: userReserveShow.email,
+      password: userReserveShow.password,
     });
 
     token = auth.body.token;
 
     const car = await supertest(app)
       .post('/api/v1/car')
-      .send(carReserveDelete)
+      .send(carReserveShow)
       .set('Authorization', `Bearer ${token}`);
 
     carId = car.body._id;
@@ -117,13 +117,13 @@ describe('ShowReserve', () => {
   it('Should not be possible to show a non-existent reserve', async () => {
     const user = await supertest(app)
       .post('/api/v1/user')
-      .send(userReserveDelete);
+      .send(userReserveShow);
 
     userId = user.body._id;
 
     const auth = await supertest(app).post('/api/v1/auth').send({
-      email: userReserveDelete.email,
-      password: userReserveDelete.password,
+      email: userReserveShow.email,
+      password: userReserveShow.password,
     });
 
     token = auth.body.token;

@@ -24,7 +24,7 @@ describe('ListReserve', () => {
   let carId: string;
   let reserveId: string;
 
-  const userReserveDelete = {
+  const userReserveList = {
     name: 'User Reserve List',
     cpf: '214.215.555-33',
     birthday: '12/05/2000',
@@ -34,7 +34,7 @@ describe('ListReserve', () => {
     cep: '58340-000',
   };
 
-  const carReserveDelete = {
+  const carReserveList = {
     model: 'Gol G5',
     color: 'white',
     year: '2020',
@@ -57,20 +57,20 @@ describe('ListReserve', () => {
   it('Should be able to list reserve with query', async () => {
     const user = await supertest(app)
       .post('/api/v1/user')
-      .send(userReserveDelete);
+      .send(userReserveList);
 
     userId = user.body._id;
 
     const auth = await supertest(app).post('/api/v1/auth').send({
-      email: userReserveDelete.email,
-      password: userReserveDelete.password,
+      email: userReserveList.email,
+      password: userReserveList.password,
     });
 
     token = auth.body.token;
 
     const car = await supertest(app)
       .post('/api/v1/car')
-      .send(carReserveDelete)
+      .send(carReserveList)
       .set('Authorization', `Bearer ${token}`);
 
     carId = car.body._id;
@@ -119,20 +119,20 @@ describe('ListReserve', () => {
   it('Should be able to list reserves', async () => {
     const user = await supertest(app)
       .post('/api/v1/user')
-      .send(userReserveDelete);
+      .send(userReserveList);
 
     userId = user.body._id;
 
     const auth = await supertest(app).post('/api/v1/auth').send({
-      email: userReserveDelete.email,
-      password: userReserveDelete.password,
+      email: userReserveList.email,
+      password: userReserveList.password,
     });
 
     token = auth.body.token;
 
     const car = await supertest(app)
       .post('/api/v1/car')
-      .send(carReserveDelete)
+      .send(carReserveList)
       .set('Authorization', `Bearer ${token}`);
 
     carId = car.body._id;

@@ -5,7 +5,7 @@ import ReserveRepositoryInMemory from '@modules/reserve/infra/typeorm/repositori
 import { ISearchParamsList } from '@modules/reserve/domain/models/ISearchParamsList';
 import { IPaginateReserve } from '@modules/reserve/domain/models/IPaginateReserve';
 
-describe('ListReserveService', () => {
+describe('ListReserve', () => {
   let reserveRepositoryInMemory: ReserveRepositoryInMemory;
   let listReserveService: ListReserveService;
 

@@ -1,12 +1,11 @@
 import 'reflect-metadata';
-import { ObjectId } from 'mongodb';
 import ListUserService from '@modules/users/services/ListUserService';
 import UserRepositoryInMemory from '@modules/users/infra/typeorm/repositories/inMemory/UserRepositoryInMemory';
 import { ISearchParamsList } from '@modules/users/domain/models/ISearchParamsList';
 import { IPaginateUser } from '@modules/users/domain/models/IPaginateUser';
 import { Qualified } from '@modules/users/domain/enums/Qualified';
 
-describe('ListUserService', () => {
+describe('ListUser', () => {
   let userRepositoryInMemory: UserRepositoryInMemory;
   let listUserService: ListUserService;
 
