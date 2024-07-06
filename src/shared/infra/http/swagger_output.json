@@ -1,0 +1,1083 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "version": "1.0.0",
+    "title": "FlexiLease Autos API",
+    "description": "API for managing users, cars, and reservations. The project consists of developing a FULL REST API for a car rental company."
+  },
+  "servers": [
+    {
+      "url": "http://localhost:3333"
+    }
+  ],
+  "paths": {
+    "/api/v1/user/": {
+      "post": {
+        "tags": ["User"],
+        "summary": "Create a new user",
+        "description": "Creates a new user with the provided details",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "name": {
+                    "type": "string"
+                  },
+                  "cpf": {
+                    "type": "string"
+                  },
+                  "birthday": {
+                    "type": "string",
+                    "format": "date"
+                  },
+                  "email": {
+                    "type": "string",
+                    "format": "email"
+                  },
+                  "password": {
+                    "type": "string"
+                  },
+                  "qualified": {
+                    "type": "string",
+                    "enum": ["yes", "no"]
+                  },
+                  "cep": {
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "name",
+                  "cpf",
+                  "birthday",
+                  "email",
+                  "password",
+                  "qualified",
+                  "cep"
+                ],
+                "example": {
+                  "name": "User 1",
+                  "cpf": "123.456.789-00",
+                  "birthday": "2003-05-01",
+                  "email": "user1@example.com",
+                  "password": "123456",
+                  "qualified": "yes",
+                  "cep": "05606-010"
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "User successfully created"
+          },
+          "400": {
+            "description": "Bad request"
+          },
+          "500": {
+            "description": "Internal server error"
+          }
+        }
+      },
+      "get": {
+        "tags": ["User"],
+        "summary": "Get all users",
+        "description": "Retrieve a list of users with optional pagination and search parameters",
+        "parameters": [
+          {
+            "name": "limit",
+            "in": "query",
+            "description": "Number of users to return",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "default": 5
+            }
+          },
+          {
+            "name": "offset",
+            "in": "query",
+            "description": "Number of users to skip",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "default": 0
+            }
+          },
+          {
+            "name": "name",
+            "in": "query",
+            "description": "Filter by user name",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "cpf",
+            "in": "query",
+            "description": "Filter by user cpf",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "email",
+            "in": "query",
+            "description": "Filter by user email",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "birthday",
+            "in": "query",
+            "description": "Filter by birthday (DD/MM/AAAA)",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "format": "date"
+            }
+          },
+          {
+            "name": "qualified",
+            "in": "query",
+            "description": "Filter by qualification status",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "enum": ["yes", "no"]
+            }
+          },
+          {
+            "name": "cep",
+            "in": "query",
+            "description": "Filter by CEP",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "complement",
+            "in": "query",
+            "description": "Filter by address complement",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "neighborhood",
+            "in": "query",
+            "description": "Filter by neighborhood",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "locality",
+            "in": "query",
+            "description": "Filter by locality",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "uf",
+            "in": "query",
+            "description": "Filter by UF (state)",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful operation. Returns a list of users with pagination and search results."
+          },
+          "500": {
+            "description": "Internal server error"
+          }
+        },
+        "security": [
+          {
+            "BearerAuth": []
+          }
+        ]
+      }
+    },
+    "/api/v1/user/{id}": {
+      "get": {
+        "tags": ["User"],
+        "summary": "Get a user by ID",
+        "description": "Retrieve a user by their ID",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "The ID of the user to retrieve"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "User successfully retrieved"
+          },
+          "404": {
+            "description": "User not found"
+          },
+          "500": {
+            "description": "Internal server error"
+          }
+        },
+        "security": [
+          {
+            "BearerAuth": []
+          }
+        ]
+      },
+      "put": {
+        "tags": ["User"],
+        "summary": "Update a user by ID",
+        "description": "Update the details of an existing user by their ID",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "The ID of the user to update"
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "name": {
+                    "type": "string"
+                  },
+                  "cpf": {
+                    "type": "string"
+                  },
+                  "birthday": {
+                    "type": "string",
+                    "format": "date"
+                  },
+                  "email": {
+                    "type": "string",
+                    "format": "email"
+                  },
+                  "password": {
+                    "type": "string"
+                  },
+                  "qualified": {
+                    "type": "string",
+                    "enum": ["yes", "no"]
+                  },
+                  "cep": {
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "name",
+                  "cpf",
+                  "birthday",
+                  "email",
+                  "password",
+                  "qualified",
+                  "cep"
+                ],
+                "example": {
+                  "name": "User Updated",
+                  "cpf": "123.456.789-11",
+                  "birthday": "12/06/2006",
+                  "email": "user_updated@example.com",
+                  "password": "1234567",
+                  "qualified": "no",
+                  "cep": "58345-000"
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "User successfully updated"
+          },
+          "400": {
+            "description": "Bad request"
+          },
+          "404": {
+            "description": "User not found"
+          },
+          "500": {
+            "description": "Internal server error"
+          }
+        },
+        "security": [
+          {
+            "BearerAuth": []
+          }
+        ]
+      },
+      "delete": {
+        "tags": ["User"],
+        "summary": "Delete a user by ID",
+        "description": "Delete an existing user by their ID",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "The ID of the user to delete"
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "User successfully deleted"
+          },
+          "404": {
+            "description": "User not found"
+          },
+          "500": {
+            "description": "Internal server error"
+          }
+        },
+        "security": [
+          {
+            "BearerAuth": []
+          }
+        ]
+      }
+    },
+    "/api/v1/auth/": {
+      "post": {
+        "tags": ["Auth"],
+        "summary": "Authenticate user",
+        "description": "Authenticate a user and return a JWT token",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "email": {
+                    "type": "string",
+                    "format": "email"
+                  },
+                  "password": {
+                    "type": "string"
+                  }
+                },
+                "required": ["email", "password"],
+                "example": {
+                  "email": "user@example.com",
+                  "password": "password123"
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Authentication successful"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "500": {
+            "description": "Internal server error"
+          }
+        }
+      }
+    },
+    "/api/v1/car/": {
+      "post": {
+        "tags": ["Car"],
+        "summary": "Create a new car",
+        "description": "Creates a new car with the provided details",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "model": {
+                    "type": "string"
+                  },
+                  "color": {
+                    "type": "string"
+                  },
+                  "year": {
+                    "type": "string"
+                  },
+                  "value_per_day": {
+                    "type": "number",
+                    "format": "float"
+                  },
+                  "number_of_passengers": {
+                    "type": "integer",
+                    "format": "int32"
+                  },
+                  "accessories": {
+                    "type": "array",
+                    "items": {
+                      "type": "object",
+                      "properties": {
+                        "description": {
+                          "type": "string"
+                        }
+                      }
+                    }
+                  }
+                },
+                "required": [
+                  "model",
+                  "color",
+                  "year",
+                  "value_per_day",
+                  "number_of_passengers",
+                  "accessories"
+                ],
+                "example": {
+                  "model": "Corolla",
+                  "color": "White",
+                  "year": "2020",
+                  "value_per_day": 450,
+                  "number_of_passengers": 5,
+                  "accessories": [
+                    {
+                      "description": "Air Conditioning"
+                    },
+                    {
+                      "description": "GPS"
+                    }
+                  ]
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Car successfully created"
+          },
+          "400": {
+            "description": "Bad request"
+          },
+          "500": {
+            "description": "Internal server error"
+          }
+        },
+        "security": [
+          {
+            "BearerAuth": []
+          }
+        ]
+      },
+      "get": {
+        "tags": ["Car"],
+        "summary": "Get all cars",
+        "parameters": [
+          {
+            "name": "limit",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32",
+              "default": 5
+            },
+            "description": "Limit number of cars per page"
+          },
+          {
+            "name": "offset",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32",
+              "default": 0
+            },
+            "description": "Offset for pagination"
+          },
+          {
+            "name": "model",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            },
+            "description": "Filter by car model"
+          },
+          {
+            "name": "color",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            },
+            "description": "Filter by car color"
+          },
+          {
+            "name": "year",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            },
+            "description": "Filter by car year"
+          },
+          {
+            "name": "value_per_day",
+            "in": "query",
+            "schema": {
+              "type": "number",
+              "format": "float"
+            },
+            "description": "Filter by car value per day"
+          },
+          {
+            "name": "number_of_passengers",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            },
+            "description": "Filter by number of passengers"
+          },
+          {
+            "name": "accessories.description",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            },
+            "description": "Filter by accessory description"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful operation"
+          },
+          "500": {
+            "description": "Internal server error"
+          }
+        },
+        "security": [
+          {
+            "BearerAuth": []
+          }
+        ]
+      }
+    },
+    "/api/v1/car/{id}": {
+      "get": {
+        "tags": ["Car"],
+        "summary": "Get a car by ID",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful operation"
+          },
+          "404": {
+            "description": "Car not found"
+          },
+          "500": {
+            "description": "Internal server error"
+          }
+        },
+        "security": [
+          {
+            "BearerAuth": []
+          }
+        ]
+      },
+      "put": {
+        "tags": ["Car"],
+        "summary": "Update a car by ID",
+        "description": "Update the details of an existing car by its ID",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "The ID of the car to update"
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "model": {
+                    "type": "string"
+                  },
+                  "color": {
+                    "type": "string"
+                  },
+                  "year": {
+                    "type": "string"
+                  },
+                  "value_per_day": {
+                    "type": "number",
+                    "format": "float"
+                  },
+                  "number_of_passengers": {
+                    "type": "integer",
+                    "format": "int32"
+                  }
+                },
+                "required": [
+                  "model",
+                  "color",
+                  "year",
+                  "value_per_day",
+                  "number_of_passengers"
+                ],
+                "example": {
+                  "model": "Polo",
+                  "color": "Silver",
+                  "year": "2019",
+                  "value_per_day": 250,
+                  "number_of_passengers": 4
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Car successfully updated"
+          },
+          "404": {
+            "description": "Car not found"
+          },
+          "500": {
+            "description": "Internal server error"
+          }
+        },
+        "security": [
+          {
+            "BearerAuth": []
+          }
+        ]
+      },
+      "delete": {
+        "tags": ["Car"],
+        "summary": "Delete a car by ID",
+        "description": "Delete an existing car by its ID",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "The ID of the car to delete"
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "Car successfully deleted"
+          },
+          "404": {
+            "description": "Car not found"
+          },
+          "500": {
+            "description": "Internal server error"
+          }
+        },
+        "security": [
+          {
+            "BearerAuth": []
+          }
+        ]
+      }
+    },
+    "/api/v1/car/{id}/accessories/{accessoryId}": {
+      "patch": {
+        "tags": ["Car"],
+        "summary": "Update an accessory of a car",
+        "parameters": [
+          {
+            "name": "_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "The ID of the car"
+          },
+          {
+            "name": "accessoryId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "The ID of the accessory"
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "string",
+                "properties": {
+                  "description": {
+                    "type": "string"
+                  }
+                },
+                "required": ["description"],
+                "example": {
+                  "description": "Led"
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Accessory successfully updated"
+          },
+          "404": {
+            "description": "Car not found"
+          },
+          "500": {
+            "description": "Internal server error"
+          }
+        },
+        "security": [
+          {
+            "BearerAuth": []
+          }
+        ]
+      }
+    },
+    "/api/v1/reserve/": {
+      "post": {
+        "tags": ["Reserve"],
+        "summary": "Create a new reservation",
+        "description": "Creates a new reservation with the provided details",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "_id_user": {
+                    "type": "string",
+                    "description": "User ID for the reservation"
+                  },
+                  "_id_car": {
+                    "type": "string",
+                    "description": "Car ID for the reservation"
+                  },
+                  "start_date": {
+                    "type": "string",
+                    "format": "date",
+                    "description": "Start date of the reservation (DD/MM/AAAA)"
+                  },
+                  "end_date": {
+                    "type": "string",
+                    "format": "date",
+                    "description": "End date of the reservation (DD/MM/AAAA)"
+                  }
+                },
+                "required": ["_id_user", "_id_car", "start_date", "end_date"],
+                "example": {
+                  "_id_user": "609ba4e4f37b5924dce4f25b",
+                  "_id_car": "609ba4e4f37b5924dce4f25c",
+                  "start_date": "10/05/2023",
+                  "end_date": "15/05/2023"
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Reservation successfully created"
+          },
+          "400": {
+            "description": "Bad request"
+          },
+          "500": {
+            "description": "Internal server error"
+          }
+        },
+        "security": [
+          {
+            "BearerAuth": []
+          }
+        ]
+      },
+      "get": {
+        "tags": ["Reserve"],
+        "summary": "Get all reservations",
+        "parameters": [
+          {
+            "name": "limit",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32",
+              "default": 5,
+              "minimum": 1,
+              "description": "Limit number of reservations per page"
+            }
+          },
+          {
+            "name": "offset",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32",
+              "default": 0,
+              "minimum": 0,
+              "description": "Offset for pagination"
+            }
+          },
+          {
+            "name": "_id_user",
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "description": "Filter by user ID"
+            }
+          },
+          {
+            "name": "_id_car",
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "description": "Filter by car ID"
+            }
+          },
+          {
+            "name": "start_date",
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "format": "date",
+              "description": "Filter by start date of reservation (DD/MM/AAAA)"
+            }
+          },
+          {
+            "name": "end_date",
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "format": "date",
+              "description": "Filter by end date of reservation (DD/MM/AAAA)"
+            }
+          },
+          {
+            "name": "final_value",
+            "in": "query",
+            "schema": {
+              "type": "number",
+              "format": "float",
+              "description": "Filter by final value of reservation"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful operation"
+          },
+          "500": {
+            "description": "Internal server error"
+          }
+        },"security": [
+          {
+            "BearerAuth": []
+          }
+        ]
+      }
+    },
+    "/api/v1/reserve/{id}": {
+      "get": {
+        "tags": ["Reserve"],
+        "summary": "Get a reservation by ID",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "description": "ID of the reservation to retrieve"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful operation"
+          },
+          "404": {
+            "description": "Reservation not found"
+          },
+          "500": {
+            "description": "Internal server error"
+          }
+        },
+        "security": [
+          {
+            "BearerAuth": []
+          }
+        ]
+      },
+      "put": {
+        "tags": ["Reserve"],
+        "summary": "Update a reservation by ID",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "description": "ID of the reservation to update"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "_id_user": {
+                    "type": "string",
+                    "description": "User ID for the reservation"
+                  },
+                  "_id_car": {
+                    "type": "string",
+                    "description": "Car ID for the reservation"
+                  },
+                  "start_date": {
+                    "type": "string",
+                    "format": "date",
+                    "description": "Start date of the reservation (DD/MM/AAAA)"
+                  },
+                  "end_date": {
+                    "type": "string",
+                    "format": "date",
+                    "description": "End date of the reservation (DD/MM/AAAA)"
+                  }
+                },
+                "required": ["_id_user", "_id_car", "start_date", "end_date"],
+                "example": {
+                  "_id_user": "609ba4e4f37b5924dce4f25b",
+                  "_id_car": "609ba4e4f37b5924dce4f25c",
+                  "start_date": "10/06/2023",
+                  "end_date": "15/07/2023"
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Reservation successfully updated"
+          },
+          "400": {
+            "description": "Bad request"
+          },
+          "404": {
+            "description": "Reservation not found"
+          },
+          "500": {
+            "description": "Internal server error"
+          }
+        },
+        "security": [
+          {
+            "BearerAuth": []
+          }
+        ]
+      },
+      "delete": {
+        "tags": ["Reserve"],
+        "summary": "Delete a reservation by ID",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "description": "ID of the reservation to delete"
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "Reservation successfully deleted"
+          },
+          "404": {
+            "description": "Reservation not found"
+          },
+          "500": {
+            "description": "Internal server error"
+          }
+        },
+        "security": [
+          {
+            "BearerAuth": []
+          }
+        ]
+      }
+    }
+  },
+  "components": {
+    "securitySchemes": {
+      "BearerAuth": {
+        "type": "http",
+        "scheme": "bearer",
+        "bearerFormat": "JWT"
+      }
+    }
+  },
+  "security": [
+    {
+      "bearerAuth": []
+    }
+  ]
+}
