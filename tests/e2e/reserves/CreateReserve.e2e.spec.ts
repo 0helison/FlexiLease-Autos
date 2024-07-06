@@ -13,7 +13,7 @@ import {
 } from '@shared/consts/ErrorMessagesConsts';
 import { BAD_REQUEST, NOT_FOUND } from '@shared/consts/ErrorsConsts';
 import { HttpStatusCode } from '@shared/enums/HttpStatusCode';
-import DeleteReserveService from '@modules/reserve/services/DeleteReserveService';
+import CreateReserveService from '@modules/reserve/services/CreateReserveService';
 
 beforeAll(async () => {
   await dataSource.initialize();
@@ -25,12 +25,13 @@ afterAll(async () => {
 });
 
 describe('CreateReserve', () => {
-  let deleteReserveService: DeleteReserveService;
+  let createReserveService: CreateReserveService;
 
   let token: string;
   let userId: string;
   let userId2: string;
   let carId: string;
+  let carId2: string;
   let reserveId: string;
 
   const userReserveCreate = {
@@ -63,8 +64,24 @@ describe('CreateReserve', () => {
     cep: '58340-000',
   };
 
-  const carReserveDelete = {
+  const carReserveCreate = {
     model: 'Gol G5',
+    color: 'white',
+    year: '2020',
+    value_per_day: 100,
+    number_of_passengers: 3,
+    accessories: [
+      {
+        description: 'led',
+      },
+      {
+        description: 'gps',
+      },
+    ],
+  };
+
+  const carReserveCreate2 = {
+    model: 'Polo',
     color: 'white',
     year: '2020',
     value_per_day: 100,
@@ -122,7 +139,7 @@ describe('CreateReserve', () => {
   };
 
   beforeEach(() => {
-    deleteReserveService = container.resolve(DeleteReserveService);
+    createReserveService = container.resolve(CreateReserveService);
   });
 
   it('Should be able to create a new reserve', async () => {
@@ -141,7 +158,7 @@ describe('CreateReserve', () => {
 
     const car = await supertest(app)
       .post('/api/v1/car')
-      .send(carReserveDelete)
+      .send(carReserveCreate)
       .set('Authorization', `Bearer ${token}`);
 
     carId = car.body._id;
@@ -189,7 +206,7 @@ describe('CreateReserve', () => {
 
     const car = await supertest(app)
       .post('/api/v1/car')
-      .send(carReserveDelete)
+      .send(carReserveCreate)
       .set('Authorization', `Bearer ${token}`);
 
     carId = car.body._id;
@@ -230,7 +247,7 @@ describe('CreateReserve', () => {
 
     const car = await supertest(app)
       .post('/api/v1/car')
-      .send(carReserveDelete)
+      .send(carReserveCreate)
       .set('Authorization', `Bearer ${token}`);
 
     carId = car.body._id;
@@ -305,7 +322,7 @@ describe('CreateReserve', () => {
 
     const car = await supertest(app)
       .post('/api/v1/car')
-      .send(carReserveDelete)
+      .send(carReserveCreate)
       .set('Authorization', `Bearer ${token}`);
 
     carId = car.body._id;
@@ -354,7 +371,7 @@ describe('CreateReserve', () => {
 
     const car = await supertest(app)
       .post('/api/v1/car')
-      .send(carReserveDelete)
+      .send(carReserveCreate)
       .set('Authorization', `Bearer ${token}`);
 
     carId = car.body._id;
@@ -411,10 +428,17 @@ describe('CreateReserve', () => {
 
     const car = await supertest(app)
       .post('/api/v1/car')
-      .send(carReserveDelete)
+      .send(carReserveCreate)
       .set('Authorization', `Bearer ${token}`);
 
     carId = car.body._id;
+
+    const car2 = await supertest(app)
+      .post('/api/v1/car')
+      .send(carReserveCreate2)
+      .set('Authorization', `Bearer ${token}`);
+
+    carId2 = car2.body._id;
 
     const reserveData = {
       _id_user: userId,
@@ -430,7 +454,7 @@ describe('CreateReserve', () => {
 
     const reserveData2 = {
       _id_user: userId,
-      _id_car: carId,
+      _id_car: carId2,
       start_date: '06/08/2015',
       end_date: '09/08/2015',
     };

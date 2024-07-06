@@ -64,46 +64,55 @@ class UpdateReserveService {
       reserveToUpdate._id_car = _id_car;
     }
 
-    if (
-      start_date &&
-      start_date !== reserveToUpdate.start_date &&
-      end_date &&
-      end_date !== reserveToUpdate.end_date
-    ) {
+    if (start_date && end_date) {
       if (dateOrderValidation(start_date, end_date)) {
         throw new BusinessError(DATE_ORDER_INVALID);
       }
 
-      const existingReserveSameDay =
-        await this.reserveRepository.findByCarAndDate(_id_car, start_date);
+      const existingReservesSameDay =
+        await this.reserveRepository.findByCarId(_id_car);
 
-      if (existingReserveSameDay) {
-        throw new BusinessError(CAR_ALREADY_RESERVED_SAME_DAY);
+      for (const reserve of existingReservesSameDay) {
+        if (reserve._id !== _id) {
+          const reserveDates = generateDateRange(
+            reserve.start_date,
+            reserve.end_date,
+          );
+          if (
+            reserveDates.some(date => date >= start_date && date <= end_date)
+          ) {
+            throw new BusinessError(CAR_ALREADY_RESERVED_SAME_DAY);
+          }
+        }
       }
 
       const existingReservesInRange =
         await this.reserveRepository.findByUserId(_id_user);
 
       for (const reserveInRange of existingReservesInRange) {
-        const reserveDates = generateDateRange(
-          reserveInRange.start_date,
-          reserveInRange.end_date,
-        );
-
-        if (reserveDates.some(date => date >= start_date && date <= end_date)) {
-          throw new BusinessError(USER_ALREADY_HAS_RESERVATION_IN_DATE);
+        if (reserveInRange._id !== _id) {
+          const reserveDates = generateDateRange(
+            reserveInRange.start_date,
+            reserveInRange.end_date,
+          );
+          if (
+            reserveDates.some(date => date >= start_date && date <= end_date)
+          ) {
+            throw new BusinessError(USER_ALREADY_HAS_RESERVATION_IN_DATE);
+          }
         }
       }
+
       reserveToUpdate.start_date = start_date;
       reserveToUpdate.end_date = end_date;
-    }
 
-    const finalValueUpdate = await this.carRepository.findById(_id_car);
+      const finalValueUpdate = await this.carRepository.findById(_id_car);
 
-    if (finalValueUpdate) {
-      reserveToUpdate.final_value =
-        finalValueUpdate?.value_per_day *
-        (differenceInDays(end_date, start_date) + 1);
+      if (finalValueUpdate) {
+        reserveToUpdate.final_value =
+          finalValueUpdate.value_per_day *
+          (differenceInDays(end_date, start_date) + 1);
+      }
     }
 
     const updateReserve = await this.reserveRepository.save(reserveToUpdate);

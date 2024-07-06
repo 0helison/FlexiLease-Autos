@@ -7,7 +7,7 @@ import { ISearchParamsList } from '../models/ISearchParamsList';
 export interface IReserveRepository {
   create(data: ICreateReserve): Promise<IReserve>;
   save(reserve: IReserve): Promise<IReserve>;
-  findByCarAndDate(_id_car: ObjectId, date: Date): Promise<IReserve | null>;
+  findByCarId(_id_car: ObjectId): Promise<IReserve[]>;
   findByUserId(_id_user: ObjectId): Promise<IReserve[]>;
   findById(_id: ObjectId): Promise<IReserve | null>;
   remove(data: IReserve): Promise<void>;

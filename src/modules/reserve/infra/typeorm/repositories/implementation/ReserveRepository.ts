@@ -29,17 +29,13 @@ class ReserveRepository implements IReserveRepository {
     return reserve;
   }
 
-  public async findByCarAndDate(
-    _id_car: ObjectId,
-    start_date: Date,
-  ): Promise<IReserve | null> {
-    const reserve = await this.ormRepository.findOne({
+  public async findByCarId(_id_car: ObjectId): Promise<IReserve[]> {
+    const reserves = await this.ormRepository.find({
       where: {
         _id_car: _id_car,
-        start_date: start_date,
       },
     });
-    return reserve || null;
+    return reserves;
   }
 
   public async findByUserId(_id_user: ObjectId): Promise<IReserve[]> {

@@ -54,11 +54,18 @@ class CreateReserveService {
       throw new BusinessError(DATE_ORDER_INVALID);
     }
 
-    const existingReserveSameDay =
-      await this.reserveRepository.findByCarAndDate(_id_car, start_date);
+    const existingReservesSameDay =
+      await this.reserveRepository.findByCarId(_id_car);
 
-    if (existingReserveSameDay) {
-      throw new BusinessError(CAR_ALREADY_RESERVED_SAME_DAY);
+    for (const reserve of existingReservesSameDay) {
+      const reserveDates = generateDateRange(
+        reserve.start_date,
+        reserve.end_date,
+      );
+
+      if (reserveDates.some(date => date >= start_date && date <= end_date)) {
+        throw new BusinessError(CAR_ALREADY_RESERVED_SAME_DAY);
+      }
     }
 
     const existingReservesInRange =

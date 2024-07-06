@@ -30,14 +30,9 @@ class ReserveRepositoryInMemory implements IReserveRepository {
     return reserve;
   }
 
-  public async findByCarAndDate(
-    _id_car: ObjectId,
-    start_date: Date,
-  ): Promise<IReserve | null> {
-    const reserve = this.reserves.find(
-      r => r._id_car.equals(_id_car) && r.start_date === start_date,
-    );
-    return reserve || null;
+  public async findByCarId(_id_car: ObjectId): Promise<IReserve[]> {
+    const reserves = this.reserves.filter(r => r._id_car.equals(_id_car));
+    return reserves;
   }
 
   public async findByUserId(_id_user: ObjectId): Promise<IReserve[]> {

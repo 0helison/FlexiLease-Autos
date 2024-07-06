@@ -68,7 +68,7 @@ describe('UpdateUser', () => {
     name: 'User Update 5',
     cpf: '999.888.444-55',
     birthday: '17/08/2003',
-    email: 'user_update2@mail.com',
+    email: 'user_update5@mail.com',
     password: '123456',
     qualified: 'yes',
     cep: '58340-000',
@@ -122,6 +122,16 @@ describe('UpdateUser', () => {
     password: '01234567',
     qualified: 'no',
     cep: '58345-000',
+  };
+
+  const userUpdate11 = {
+    name: 'User Update 11',
+    cpf: '991.881.441-51',
+    birthday: '17/08/2003',
+    email: 'user_update5@mail.com',
+    password: '123456',
+    qualified: 'yes',
+    cep: '58340-000',
   };
 
   const errorExistentCpf = {
@@ -219,6 +229,8 @@ describe('UpdateUser', () => {
 
     const userId = createResponse.body._id;
 
+    await supertest(app).post('/api/v1/user').send(userUpdate5);
+
     const authResponse = await supertest(app).post('/api/v1/auth').send({
       email: userUpdate4.email,
       password: userUpdate4.password,
@@ -229,7 +241,7 @@ describe('UpdateUser', () => {
     const response = await supertest(app)
       .put(`/api/v1/user/${userId}`)
       .set('Authorization', `Bearer ${token}`)
-      .send(userUpdate5);
+      .send(userUpdate11);
 
     expect(response.status).toBe(HttpStatusCode.BAD_REQUEST);
     expect(response.body).toEqual(errorExistentEmail);
