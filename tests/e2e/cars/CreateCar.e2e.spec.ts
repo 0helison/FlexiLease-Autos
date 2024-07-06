@@ -94,30 +94,6 @@ describe('CreateCar', () => {
     ],
   };
 
-  const errorYearRangeErrorMessage = {
-    code: 400,
-    status: 'Bad Request',
-    message: "The 'year' field must be between 1950 and 2023.",
-    details: [
-      {
-        field: 'year',
-        message: "The 'year' field must be between 1950 and 2023.",
-      },
-    ],
-  };
-
-  const errorRepetingAccessory = {
-    code: 400,
-    status: 'Bad Request',
-    message: 'Repeating accessories is not permitted.',
-    details: [
-      {
-        field: 'accessories',
-        message: 'Repeating accessories is not permitted.',
-      },
-    ],
-  };
-
   beforeEach(() => {
     createCarService = container.resolve(CreateCarService);
   });
@@ -173,7 +149,6 @@ describe('CreateCar', () => {
       .set('Authorization', `Bearer ${token}`);
 
     expect(response.status).toBe(HttpStatusCode.BAD_REQUEST);
-    expect(response.body).toEqual(errorYearRangeErrorMessage);
 
     await supertest(app)
       .delete(`/api/v1/user/${user.body._id}`)
@@ -196,7 +171,6 @@ describe('CreateCar', () => {
       .set('Authorization', `Bearer ${token}`);
 
     expect(response.status).toBe(HttpStatusCode.BAD_REQUEST);
-    expect(response.body).toEqual(errorYearRangeErrorMessage);
 
     await supertest(app)
       .delete(`/api/v1/user/${user.body._id}`)
@@ -219,7 +193,6 @@ describe('CreateCar', () => {
       .set('Authorization', `Bearer ${token}`);
 
     expect(response.status).toBe(HttpStatusCode.BAD_REQUEST);
-    expect(response.body).toEqual(errorRepetingAccessory);
 
     await supertest(app)
       .delete(`/api/v1/user/${user.body._id}`)

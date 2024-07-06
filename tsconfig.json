@@ -5,10 +5,7 @@
     "experimentalDecorators": true,
     "emitDecoratorMetadata": true,
     "module": "commonjs",
-    "rootDirs": [
-      "./src",
-      "./tests"
-    ],
+    "rootDirs": ["./src", "./tests"],
     "baseUrl": "./",
     "paths": {
       "@config/*": ["src/config/*"],

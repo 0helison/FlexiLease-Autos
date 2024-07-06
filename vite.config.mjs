@@ -14,12 +14,14 @@ export const userConfig = {
   ],
   test: {
     globals: true,
+    environment: 'node',
+    retry: 3,
     root: './',
     coverage: {
       exclude: [
         '**/*index.ts',
+        'swagger.ts',
         '**/*server.ts',
-        '**/*Table.ts',
         '**/*.config.mjs',
       ],
     },

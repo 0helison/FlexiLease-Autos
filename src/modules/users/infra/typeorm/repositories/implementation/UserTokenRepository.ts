@@ -1,7 +1,7 @@
 import { Repository } from 'typeorm';
 import { dataSource } from '@shared/infra/typeorm';
 import { IUserTokensRepository } from '@modules/users/domain/repositories/IUserTokenRepository';
-import { UserToken } from '../entities/UserToken';
+import { UserToken } from '../../entities/UserToken';
 import { ObjectId } from 'mongodb';
 
 class UserTokensRepository implements IUserTokensRepository {

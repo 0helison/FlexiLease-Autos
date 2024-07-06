@@ -1,6 +1,6 @@
 import { Repository } from 'typeorm';
 import { dataSource } from '@shared/infra/typeorm';
-import { Car } from '../entities/Cars';
+import { Car } from '../../entities/Cars';
 import { ObjectId } from 'mongodb';
 import { ICarRepository } from '@modules/cars/domain/repositories/ICarRepository';
 import { ICar } from '@modules/cars/domain/models/ICar';

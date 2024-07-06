@@ -17,7 +17,7 @@ afterAll(async () => {
   await dataSource.destroy();
 });
 
-describe('AuthUser', () => {
+describe('DeleteUser', () => {
   let deleteUserService: DeleteUserService;
 
   const userDelete = {

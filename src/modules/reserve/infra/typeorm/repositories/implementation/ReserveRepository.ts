@@ -1,6 +1,6 @@
 import { Repository } from 'typeorm';
 import { dataSource } from '@shared/infra/typeorm';
-import { Reserve } from '../entities/Reserve';
+import { Reserve } from '../../entities/Reserve';
 import { IReserveRepository } from '@modules/reserve/domain/repositories/IReserveRepository';
 import { ICreateReserve } from '@modules/reserve/domain/models/ICreateReserve';
 import { IReserve } from '@modules/reserve/domain/models/IReserve';

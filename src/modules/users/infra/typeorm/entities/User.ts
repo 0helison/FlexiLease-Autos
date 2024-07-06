@@ -1,6 +1,5 @@
 import { Qualified } from '@modules/users/domain/enums/Qualified';
 import { IUser } from '@modules/users/domain/models/IUser';
-import { Exclude } from 'class-transformer';
 import { ObjectId } from 'mongodb';
 import { Entity, Column, ObjectIdColumn } from 'typeorm';
 
@@ -21,7 +20,6 @@ export class User implements IUser {
   @Column({ unique: true, nullable: false })
   email: string;
 
-  @Exclude()
   @Column({ nullable: false })
   password: string;
 

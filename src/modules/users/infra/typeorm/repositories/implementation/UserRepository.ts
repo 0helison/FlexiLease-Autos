@@ -3,7 +3,7 @@ import { dataSource } from '@shared/infra/typeorm';
 import { IUsersRepository } from '@modules/users/domain/repositories/IUserRepository';
 import { ICreateUser } from '@modules/users/domain/models/ICreateUser';
 import { IUser } from '@modules/users/domain/models/IUser';
-import { User } from '../entities/User';
+import { User } from '../../entities/User';
 import { IPaginateUser } from '@modules/users/domain/models/IPaginateUser';
 import { ObjectId } from 'mongodb';
 import { ISearchParamsList } from '@modules/users/domain/models/ISearchParamsList';
@@ -19,6 +19,8 @@ class UsersRepository implements IUsersRepository {
     limit,
     offset,
     name,
+    cpf,
+    email,
     birthday,
     qualified,
     cep,
@@ -31,6 +33,14 @@ class UsersRepository implements IUsersRepository {
 
     if (name) {
       where['name'] = { $regex: new RegExp(name, 'i') };
+    }
+
+    if (cpf) {
+      where['cpf'] = { $regex: new RegExp(cpf, 'i') };
+    }
+
+    if (email) {
+      where['email'] = { $regex: new RegExp(email, 'i') };
     }
 
     if (birthday) {

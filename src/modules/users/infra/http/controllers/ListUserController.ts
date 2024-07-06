@@ -3,6 +3,7 @@ import { container } from 'tsyringe';
 import ListUserService from '@modules/users/services/ListUserService';
 import { formatUsers } from '@modules/users/utils/formatUtils';
 import { parseDateParams } from '@shared/format/FormatDate';
+import { HttpStatusCode } from '@shared/enums/HttpStatusCode';
 
 class ListUsersController {
   public async index(request: Request, response: Response): Promise<Response> {
@@ -10,6 +11,8 @@ class ListUsersController {
     const offset = request.query.offset ? Number(request.query.offset) : 0;
 
     const name = request.query.name as string | undefined;
+    const cpf = request.query.cpf as string | undefined;
+    const email = request.query.email as string | undefined;
     const qualified = request.query.qualified as string | undefined;
     const cep = request.query.cep as string | undefined;
     const complement = request.query.complement as string | undefined;
@@ -27,6 +30,8 @@ class ListUsersController {
       limit,
       offset,
       name,
+      cpf,
+      email,
       birthday,
       qualified,
       cep,
@@ -46,7 +51,7 @@ class ListUsersController {
       offsets: usersData.offsets,
     };
 
-    return response.json(listUsers);
+    return response.status(HttpStatusCode.OK).json(listUsers);
   }
 }
 

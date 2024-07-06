@@ -10,10 +10,7 @@
     "typeorm": "ts-node-dev -r tsconfig-paths/register ./node_modules/typeorm/cli.js",
     "swagger-autogen": "ts-node src/shared/infra/http/swagger.ts",
     "format": "prettier --write .",
-    "test:first": "vitest run --dir ./tests/e2e/users/",
-    "test:second": "vitest run --dir ./tests/e2e/reserves/",
-    "test:third": "vitest run --dir ./tests/e2e/cars/",
-    "test:all": "npm run test:first && npm run test:second && npm run test:third",
+    "test:integration": "vitest run --dir ./tests/integration/",
     "test:e2e": "vitest run --dir ./tests/e2e/",
     "test:cov": "vitest run --coverage"
   },
@@ -46,7 +43,6 @@
   "dependencies": {
     "axios": "^1.7.2",
     "bcryptjs": "^2.4.3",
-    "class-transformer": "^0.5.1",
     "cors": "^2.8.5",
     "date-fns": "^3.6.0",
     "dotenv": "^16.4.5",
@@ -54,8 +50,6 @@
     "express-async-errors": "^3.1.1",
     "jsonwebtoken": "^9.0.2",
     "mongodb": "^5.9.2",
-    "qs": "^6.12.1",
-    "query-string": "^9.0.0",
     "reflect-metadata": "^0.2.2",
     "supertest": "^7.0.0",
     "swagger-ui-dist": "^5.17.14",

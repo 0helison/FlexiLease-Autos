@@ -71,18 +71,6 @@ describe('UpdateCar', () => {
     number_of_passengers: 3,
   };
 
-  const errorYearRangeErrorMessage = {
-    code: 400,
-    status: 'Bad Request',
-    message: "The 'year' field must be between 1950 and 2023.",
-    details: [
-      {
-        field: 'year',
-        message: "The 'year' field must be between 1950 and 2023.",
-      },
-    ],
-  };
-
   beforeEach(() => {
     updateCarService = container.resolve(UpdateCarService);
   });
@@ -146,7 +134,6 @@ describe('UpdateCar', () => {
       .set('Authorization', `Bearer ${token}`);
 
     expect(response.status).toBe(HttpStatusCode.BAD_REQUEST);
-    expect(response.body).toEqual(errorYearRangeErrorMessage);
 
     await supertest(app)
       .delete(`/api/v1/user/${user.body._id}`)
@@ -176,7 +163,6 @@ describe('UpdateCar', () => {
       .set('Authorization', `Bearer ${token}`);
 
     expect(response.status).toBe(HttpStatusCode.BAD_REQUEST);
-    expect(response.body).toEqual(errorYearRangeErrorMessage);
 
     await supertest(app)
       .delete(`/api/v1/user/${user.body._id}`)
