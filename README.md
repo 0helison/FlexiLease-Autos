@@ -46,7 +46,7 @@ This challenge aimed to create an API for a car rental company, using the Expres
 ## - Installation
 On your local machine, create a directory and insert the following command:
 ```bash
-https://github.com/0helison/FlexiLease-Autos.git .
+git clone https://github.com/0helison/FlexiLease-Autos.git .
 ```
 After cloning the repository, execute to run the application:
 ```bash
