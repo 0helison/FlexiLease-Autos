@@ -1,7 +1,7 @@
 {
-  "name": "eslint",
+  "name": "Flexilease Auto",
   "version": "1.0.0",
-  "description": "",
+  "description": "This challenge aimed to create an API for a car rental company, using the Express framework, TypeORM, and integrating MongoDB with Node.js.",
   "main": "index.js",
   "scripts": {
     "dev": "ts-node-dev -r tsconfig-paths/register --inspect --transpile-only --ignore-watch node_modules src/shared/infra/http/server.ts",

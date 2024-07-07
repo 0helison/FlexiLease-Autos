@@ -9,7 +9,7 @@ export const dataSource = new DataSource({
   type: 'mongodb',
   database: process.env.DATABASE,
   synchronize: true,
-  host: 'localhost',
+  host: 'db',
   port: 27017,
   entities: [UserToken, User, Car, Reserve],
 });

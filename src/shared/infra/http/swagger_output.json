@@ -60,7 +60,7 @@
                 "example": {
                   "name": "User 1",
                   "cpf": "123.456.789-00",
-                  "birthday": "2003-05-01",
+                  "birthday": "01/05/2003",
                   "email": "user1@example.com",
                   "password": "123456",
                   "qualified": "yes",
