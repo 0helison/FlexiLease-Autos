@@ -1,5 +1,5 @@
 {
-  "name": "Flexilease Auto",
+  "name": "flexilease",
   "version": "1.0.0",
   "description": "This challenge aimed to create an API for a car rental company, using the Express framework, TypeORM, and integrating MongoDB with Node.js.",
   "main": "index.js",
