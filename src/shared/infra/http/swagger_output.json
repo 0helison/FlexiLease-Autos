@@ -732,7 +732,7 @@
         "summary": "Update an accessory of a car",
         "parameters": [
           {
-            "name": "_id",
+            "name": "id",
             "in": "path",
             "required": true,
             "schema": {
