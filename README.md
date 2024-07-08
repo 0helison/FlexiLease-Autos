@@ -46,7 +46,7 @@ This challenge aimed to create an API for a car rental company, using the Expres
 ## - Installation
 On your local machine, create a directory and insert the following command:
 ```bash
-git clone https://github.com/0helison/FlexiLease-Autos.git .
+https://github.com/0helison/FlexiLease-Autos.git .
 ```
 After cloning the repository, execute to run the application:
 ```bash
@@ -68,14 +68,8 @@ JWT_EXPIRES_IN=12h
 - JWT_EXPIRES_IN=12h → How long does the token expire;
 ---
 
-## - Swagger Documentation
-
-Access the API through the base URL:
-```bash
-http://localhost:3333/api/v1/doc
-```
-
 ## - Tests
+With the application running locally, you can perform the following tests:
 ##### - Run all tests and achieve application coverage
 On your local terminal, insert the following command:
 ```bash
@@ -94,6 +88,13 @@ On your local terminal, insert the following command:
 docker exec -it api-flexilease-app npm run test:e2e
 ```
 ---
+
+## - Swagger Documentation and Deploy
+
+The application was deployed in Render and you can use Swagger using the following url:
+```bash
+https://flexilease-deploy.onrender.com/api/v1/doc
+```
 
 # Entity - User and Auth
 
@@ -133,5 +134,3 @@ docker exec -it api-flexilease-app npm run test:e2e
     delete -> ('/api/v1/reserve/:id') - Delete a specific reserve.
   ```
 ---
-
-
